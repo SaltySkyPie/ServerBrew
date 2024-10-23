@@ -22,3 +22,5 @@ venv
 package-lock.json
 
 .venv
+
+.vscode
