@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <h1 class="text-2xl font-bold mb-4 text-center">Order Your Drink</h1>
+    <form method="POST" class="space-y-4">
+        {% csrf_token %}
+        <div class="grid grid-cols-2 gap-4">
+            {% for name, label in drinks %}
+            <button type="submit" name="drink" value="{{ name }}" class="border border-gray-300 rounded-lg flex flex-col items-center p-4 hover:bg-gray-100">
+                <span class="block text-center py-2 font-bold text-gray-700">{{ label }}</span>
+            </button>
+            {% endfor %}
+        </div>
+    </form>
+</div>
+{% endblock %}

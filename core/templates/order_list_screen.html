@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-2">
+    <div hx-get="{% url 'order_list_screen' %}" hx-swap="outerHTML" hx-trigger="every 1s">
+        <!-- Two columns for Orders in Progress and Ready for Collection -->
+        <div class="grid grid-cols-2 gap-6">
+            <!-- Orders in Progress -->
+            <div class="border border-gray-300 p-4 rounded-lg bg-white h-full">
+                <h2 class="text-xl font-bold mb-4">Preparing</h2>
+                <div class="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4">
+                    {% if not not_ready_orders %}
+                        <div class="col-span-2 lg:col-span-3 xl:col-span-4 flex flex-col items-center justify-center">
+                            <!-- Message for no orders -->
+                            <span class="text-xl font-bold text-gray-500 mt-4">No orders available.</span>
+                            <span class="text-gray-400 mt-2">Looks like everyone’s taking a break!</span>
+                        </div>
+                    {% else %}
+                        {% for order in not_ready_orders %}
+                        <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6 flex flex-col items-center">
+                            <span class="text-4xl font-bold">{{ order.order_number }}</span>
+                            <span class="mt-0.5 text-lg">{{ order.drink }}</span>
+                            <span class="mt-0.5 text-gray-500 text-sm">{{ order.waiting_time }}</span>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Ready for Collection -->
+            <div class="border border-gray-300 p-4 rounded-lg bg-white h-full">
+                <h2 class="text-xl font-bold mb-4">Ready for Collection</h2>
+                <div class="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4">
+                    {% if not ready_orders %}
+                        <div class="col-span-2 lg:col-span-3 xl:col-span-4 flex flex-col items-center justify-center">
+                           <!-- Message for no orders -->
+                            <span class="text-xl font-bold text-gray-500 mt-4">No orders available.</span>
+                            <span class="text-gray-400 mt-2">Looks like everyone’s taking a break!</span>
+                        </div>
+                    {% else %}
+                        {% for order in ready_orders %}
+                        <div class="bg-green-100 border border-gray-200 rounded-lg shadow-md p-6 flex flex-col items-center">
+                            <span class="text-4xl font-bold">{{ order.order_number }}</span>
+                            <span class="mt-0.5 text-lg">{{ order.drink }}</span>
+                            <span class="mt-0.5 text-gray-500 text-sm">{{ order.waiting_time }}</span>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- New row for Average Order Preparation Time -->
+        <div class="mt-6">
+            <div class="border border-gray-300 p-4 rounded-lg bg-white h-full">
+                <h2 class="text-xl font-bold mb-4">Average Preparation Time</h2>
+                <div class="grid grid-cols-4 gap-4 lg:grid-cols-6 xl:grid-cols-8">
+                    {% if average_preparation_times %}
+                        {% for drink in average_preparation_times %}
+                        <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6 flex flex-col items-center">
+                            <span class="text-xl font-bold">{{ drink.1 }}</span>
+                            <span class="mt-2 text-lg">{{ drink.0 }}</span>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="col-span-2 lg:col-span-3 xl:col-span-4 flex flex-col items-center justify-center">
+                            <span class="text-gray-500">No data available</span>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

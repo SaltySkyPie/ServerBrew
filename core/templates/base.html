@@ -1,0 +1,28 @@
+{% if not is_htmx %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServerBrew</title>
+
+    <!-- Tailwind CSS via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- HTMX for auto-refreshing and AJAX functionality -->
+    <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+</head>
+<body class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-gray-900" hx-boost="true" hx-swap="outerHTML" hx-target="#app" id="app">
+    
+        {% endif %}
+        <div class="container mx-auto py-6">
+
+        {% block content %}
+        {% endblock %}
+
+    </div>
+        {% if not is_htmx %}
+</body>
+</html>
+{% endif %}

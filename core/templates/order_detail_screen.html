@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg" hx-get="{% url 'order_detail_screen' order_id=order.id %}" hx-swap="outerHTML" hx-trigger="every 1s">
+    <h1 class="text-2xl font-bold mb-4 text-center">Order #{{ order.order_number }}</h1>
+
+    <!-- Drink Information -->
+    <div class="mb-4">
+        <h2 class="text-xl font-semibold">Drink: {{ order.drink }}</h2>
+        <p class="text-gray-600">Status: 
+            {% if order.status == 'ordered' %}
+                <span class="text-yellow-500">Ordered</span>
+            {% elif order.status == 'ready' %}
+                <span class="text-green-500">Ready for Collection</span>
+            {% elif order.status == 'collected' %}
+                <span class="text-blue-500">Collected</span>
+            {% endif %}
+        </p>
+    </div>
+
+    <!-- Order Creation and Timing Information -->
+    <div class="mb-4">
+        <p class="text-gray-600">Created At: {{ order.created_at|date:"F j, Y, g:i a" }}</p>
+        <p class="text-gray-600">Total Preparing Time: {{ order.waiting_time }}</p>
+    </div>
+
+    <!-- Status Progress Indicator -->
+    <div class="mb-6">
+        <h3 class="text-lg font-medium">Order Progress</h3>
+        <div class="flex items-center space-x-4 mt-2">
+            <div class="flex flex-col items-center">
+                <div class="bg-green-500 w-10 h-10 rounded-full flex items-center justify-center">
+                    <span class="text-white">1</span>
+                </div>
+                <span class="text-sm mt-2">Ordered</span>
+            </div>
+
+            <div class="flex-1 h-1 bg-gray-300">
+                <div class="{% if order.status != 'ordered' %} bg-green-500 {% else %} bg-gray-300 {% endif %} h-full w-full"></div>
+            </div>
+
+            <div class="flex flex-col items-center">
+                <div class="{% if order.status == 'ready' or order.status == 'collected' %} bg-green-500 {% else %} bg-gray-300 {% endif %} w-10 h-10 rounded-full flex items-center justify-center">
+                    <span class="text-white">2</span>
+                </div>
+                <span class="text-sm mt-2">Ready</span>
+            </div>
+
+            <div class="flex-1 h-1 bg-gray-300">
+                <div class="{% if order.status == 'collected' %} bg-green-500 {% else %} bg-gray-300 {% endif %} h-full w-full"></div>
+            </div>
+
+            <div class="flex flex-col items-center">
+                <div class="{% if order.status == 'collected' %} bg-green-500 {% else %} bg-gray-300 {% endif %} w-10 h-10 rounded-full flex items-center justify-center">
+                    <span class="text-white">3</span>
+                </div>
+                <span class="text-sm mt-2">Collected</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Orders Button -->
+    <div class="text-center">
+        <a href="{% url 'order_screen' %}" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Back to Orders</a>
+    </div>
+</div>
+{% endblock %}

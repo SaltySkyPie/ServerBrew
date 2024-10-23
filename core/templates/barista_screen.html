@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-2xl font-bold text-white mb-6">Drink Queue</h1>
+<div class="rounded-md shadow-lg bg-white border border-gray-200" hx-get="{% url 'barista_screen' %}" hx-swap="outerHTML" hx-trigger="every 1s">
+    <table class="min-w-full">
+        <thead class="bg-gray-200 ">
+            <tr>
+                <th class="p-2 text-left">Order Number</th>
+                <th class="p-2 text-left">Drink</th>
+                <th class="p-2 text-left">Status</th>
+                <th class="p-2 text-left">Time Waiting</th>
+                <th class="p-2 text-left">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td class="p-2 border-b">#{{ order.order_number }}</td>
+                <td class="p-2 border-b">{{ order.drink }}</td>
+                <td class="p-2 border-b">{{ order.get_status_display }}</td>
+                <td class="p-2 border-b">{{ order.waiting_time }}</td>
+                <td class="p-2 border-b">
+                    <form method="POST" class="inline-block">
+                        {% csrf_token %}
+                        <input type="hidden" name="order_id" value="{{ order.id }}">
+                        {% if order.status == 'ordered' %}
+                        <button type="submit" name="action" value="ready" class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600">Mark as Ready</button>
+                        {% elif order.status == 'ready' %}
+                        <button type="submit" name="action" value="collected" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">Mark as Collected</button>
+                        {% endif %}
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
