@@ -10,3 +10,23 @@ Why only have 4 views, 4 templates and 4 urls when you can design an abomination
 
 That repository is pure useless complexity, and it's a perfect example of what not to do.
 
+
+
+## Installation
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+## Usage
+
+```bash
+python manage.py migrate
+python manage.py runserver
+```
+
+Then go to http://localhost:8000 and you will see the application.
+
+4 views, 4 templates, 4 urls. That's all you need.

@@ -1,6 +1,7 @@
 # byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+core/static
 
 # tests and coverage
 *.pytest_cache
@@ -14,13 +15,9 @@ __pycache__/
 # venv
 env
 venv
+.venv
 
 # other
 .DS_Store
-
-# javascript
-package-lock.json
-
-.venv
-
 .vscode
+.env

@@ -7,6 +7,9 @@ from django.db.models import Avg
 from django.utils import timezone
 from django.views.generic import View
 
+def index(request):
+    return render(request, 'index.html')
+
 def is_htmx_request(request):
     return request.headers.get('HX-Request') == 'true'
 

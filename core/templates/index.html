@@ -1,0 +1,36 @@
+ {% extends 'base.html' %}
+
+{% block content %}
+<style>
+.fade-in-up {
+    animation: fade-in-up 1s ease-out;
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+    <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg fade-in-up">
+    <h1 class="text-2xl font-bold mb-4 text-center">ServerBrew</h1>
+    <div class="space-y-4">
+        <div class="grid grid-cols-1 gap-4">
+            <button hx-push-url="true" hx-get="{% url 'order_screen' %}" class="border border-gray-300 rounded-lg flex flex-col items-center p-4 hover:bg-gray-100">
+                <span class="block text-center py-2 font-bold text-gray-700">Place an Order</span>
+            </button>
+            <button hx-push-url="true" hx-get="{% url 'order_list_screen' %}" class="border border-gray-300 rounded-lg flex flex-col items-center p-4 hover:bg-gray-100">
+                <span class="block text-center py-2 font-bold text-gray-700">Orders List</span>
+            </button>
+            <button hx-push-url="true" hx-get="{% url 'barista_screen' %}" class="border border-gray-300 rounded-lg flex flex-col items-center p-4 hover:bg-gray-100">
+                <span class="block text-center py-2 font-bold text-gray-700">Barista Screen</span>
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}

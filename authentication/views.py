@@ -1,8 +1,4 @@
-# -*- encoding: utf-8 -*-
-"""
-License: MIT
-Copyright (c) 2019 - present AppSeed.us
-"""
+
 
 from django.shortcuts import render
 
@@ -13,6 +9,7 @@ from django.contrib.auth.models import User
 from django.forms.utils import ErrorList
 from django.http import HttpResponse
 from .forms import LoginForm, SignUpForm
+
 
 def login_view(request):
     form = LoginForm(request.POST or None)
@@ -28,12 +25,13 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 return redirect("/")
-            else:    
-                msg = 'Invalid credentials'    
+            else:
+                msg = 'Invalid credentials'
         else:
-            msg = 'Error validating the form'    
+            msg = 'Error validating the form'
 
-    return render(request, "accounts/login.html", {"form": form, "msg" : msg})
+    return render(request, "accounts/login.html", {"form": form, "msg": msg})
+
 
 def register_user(request):
 
@@ -48,8 +46,8 @@ def register_user(request):
             user = authenticate(username=username, password=raw_password)
             return redirect("/login/")
         else:
-            msg = 'Form is not valid'    
+            msg = 'Form is not valid'
     else:
         form = SignUpForm()
 
-    return render(request, "accounts/register.html", {"form": form, "msg" : msg})
+    return render(request, "accounts/register.html", {"form": form, "msg": msg})
